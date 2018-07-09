@@ -18,6 +18,9 @@ $ php bin/console doctrine:migrations:migrate
 $ php bin/console assets:install --symlink
 ```
 
+First migration will add example categories to **category** table.
+You can not manage it on site **admin/category**. 
+
 # Running
 ## Create user from command line
 Run command
