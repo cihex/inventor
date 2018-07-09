@@ -1,0 +1,77 @@
+<div id="content-header">
+    <h1>Eksponaty</h1>
+    <p> {% if isSearch is defined and isSearch %}wyniki wyszukiwania dla: "{{ pattern }}" {% endif %}</p>
+</div>
+
+<div class="container-fluid">
+    <hr>
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title"><span class="icon"><i class="icon-th"></i></span>
+                    <h5>Eksponaty {% if isSearch is defined %} - wyniki wyszukiwania {% endif %}</h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered data-table">
+                        <thead>
+                        <tr>
+                            <th>Numer</th>
+                            <th>Zdjęcie</th>
+                            <th>Nazwa eksponatu</th>
+                            <th>Kategoria</th>
+                            <th>Producent</th>
+                            <th>Dostępny</th>
+                            <th>Właściciel</th>
+                            <th>Akcje</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for exhibit in exhibits %}
+                            <tr class="gradeC {% if not exhibit.available %}alert{% endif %}">
+                                <td>{{ exhibit.getNumber() }}</td>
+                                <td>
+                                    {% if exhibit.photos.first %}
+                                        <a href="{{ image('@AdminBundle/Resources/Photos/' ~ exhibit.photos.first.name).resize(800) }}"
+                                           data-fancybox data-caption="{{ exhibit.name }}">
+                                            <img src="{{ image('@AdminBundle/Resources/Photos/' ~ exhibit.photos.first.name).resize(200, 200, 'transparent') }}"
+                                                 style="width: auto;height:auto;max-width:100px;max-height: 100px"/>
+                                        </a>
+                                    {% endif %}
+                                </td>
+                                <td>{{ exhibit.getName() }}</td>
+                                <td>{{ exhibit.getCategory().getName() }}</td>
+                                <td>{{ exhibit.producer }}</td>
+                                <td>
+
+                                </td>
+                                <td>{{ exhibit.owner.getName() }}</td>
+                                <td>
+                                    <div class="btn-group btn-group-vertical">
+                                        <a class="btn btn-info btn-small" target="_blank" href="{{ url('admin_exhibit_print', {'id': exhibit.getId()}) }}"><span
+                                                    class="icon icon-print"></span> Drukuj kartę eksponatu</a>
+                                        <a class="btn btn-info btn-small"
+                                           target="_blank"
+                                           data-fancybox data-type="ajax"
+                                           data-src="{{ url('admin_exhibit_show', {'id': exhibit.getId()}) }}" data-width="800" data-filter="#pp-container" href="javascript:;"
+                                        >
+                                            <span class="icon icon-eye-open"></span> Pokaż kartę eksponatu
+                                        </a>
+                                    </div>
+                                    <div class="btn-group btn-group-vertical">
+                                        <a class="btn btn-success btn-small" href="{{ url('admin_exhibit_edit', {'id': exhibit.getId()}) }}"><span
+                                                    class="icon icon-edit"></span> Edytuj</a>
+                                        <a class="btn btn-danger btn-small" href="{{ url('admin_exhibit_delete', {'id': exhibit.getId()}) }}"><span
+                                                    class="icon icon-trash"></span> Usuń</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <a class="btn btn-success" href="{{ url('admin_exhibit_add') }}">Dodaj nowy</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

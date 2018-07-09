@@ -1,0 +1,142 @@
+{% extends '@Admin/template.html.twig' %}
+{% block styles %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('admin/css/jquery.fileupload.css') }}"/>
+{% endblock %}
+{% block javascript %}
+    {{ parent() }}
+    <script src="{{ asset('admin/js/jquery.ui.widget.js') }}"></script>
+    <script src="{{ asset('admin/js/jquery.iframe-transport.js') }}"></script>
+    <script src="{{ asset('admin/js/jquery.fileupload.js') }}"></script>
+{% endblock %}
+{% block content %}
+    <div id="content-header">
+        <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Strona główna</a> <a
+                    href="{{ url('admin_exhibit') }}">Eksponaty</a> <a href="#" class="current">Nowy eksponat</a>
+        </div>
+        <h1>Eksponaty</h1>
+    </div>
+    <div class="container-fluid">
+        <hr>
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="widget-box">
+                    <div class="widget-title"><span class="icon"><i class="icon-th"></i></span>
+                        {% if exhibit.id is null %}<h5>Nowy eksponat</h5>{% else %}<h5>Edycja eksponatu {{ exhibit.getNumber() }}{% endif %}</h5>
+                    </div>
+                    <input type="hidden" id="exhibit-id" value="{% if exhibit.id is not null %}{{ exhibit.id }}{% else %}0{% endif %}"/>
+                    <div class="widget-content">
+                        {{ form_start(form) }}
+                        {{ form_row(form.category) }}
+                        {{ form_row(form.newCategoryButton) }}
+                        {{ form_row(form.name) }}
+                        {{ form_row(form.producer) }}
+                        {{ form_row(form.produceYear) }}
+                        {{ form_row(form.description) }}
+                        {{ form_row(form.state) }}
+                        {{ form_row(form.donor) }}
+                        {{ form_row(form.newDonorButton) }}
+                        {{ form_row(form.owner) }}
+                        {{ form_row(form.newOwnerButton) }}
+                        {{ form_row(form.adoptionDate) }}
+                        {{ form_row(form.photosId) }}
+                        {{ form_row(form.save) }}
+                        {{ form_end(form) }}
+                        <hr/>
+                        <span class="btn btn-success fileinput-button">
+                            <i class="icon icon-plus"></i>
+                            <span>Select files...</span>
+                            <input id="fileupload" type="file" name="files[]" multiple>
+                        </span>
+                        <br>
+                        <br>
+                        <!-- The global progress bar -->
+                        <div id="progress" class="progress progress-striped">
+                            <div style="width: 0;" class="bar"></div>
+                        </div>
+                        <!-- The container for the uploaded files -->
+                        <ul id="files" class="thumbnails">
+                            <li id="files-file-photoId" class="span2 hidden" style="display: none">
+                                <input type="hidden" class="hidden-id" value="photoId"/>
+                                <div class="actions-2">
+                                    <a title="Czy widoczne na wydruku karty eksponatu?" href="#"
+                                       onclick="return setVisibilityInExposeCard(photoId)"><i id="visibility-button-photoId"
+                                                                                              class="icon-eye-close"></i></a>
+                                    <a href="#" onclick="return deleteExhibitPhoto(photoId);"><i class="icon-trash"></i></a>
+                                </div>
+                            </li>
+                            {% for photo in exhibit.photos %}
+                                <li id="files-file-{{ photo.id }}" class="span2" {% if photo.isActive() %}style="border: 1px solid greenyellow"{% endif %}>
+                                    <input type="hidden" class="hidden-id" value="{{ photo.id }}" />
+                                    {{ render(controller('AdminBundle:Exhibit:getThumb', {'photoName': photo.name, 'size': 200, 'container': 'gallery'})) }}
+                                    <div class="actions-2">
+                                        <a title="Czy widoczne na wydruku karty eksponatu?" href="#"
+                                           onclick="return setVisibilityInExposeCard({{ photo.id }})">
+                                            <i id="visibility-button-{{ photo.id }}"
+                                               class="{% if photo.isActive() %}icon-eye-open{% else %}icon-eye-open{% endif %}"></i>
+                                        </a>
+                                        <a href="#" onclick="return deleteExhibitPhoto({{ photo.id }});"><i class="icon-trash"></i></a>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="addEntityForm" class="modal" style="display: none">
+        <div class="modal-header">
+            Dodaj nową kategorię
+            <span
+                    style="display: inline-block;float: right;cursor: hand"
+                    class="icon icon-remove right"
+                    onclick="$('#addCategoryForm').hideModal();">
+            </span>
+        </div>
+        <div class="modal-body">
+            <div class="modal-form">
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block bottomJS %}
+    {{ parent() }}
+    <script>
+        function showForm(entityName) {
+            var $addEntityForm = $('#addEntityForm');
+            var $addEntityFormBody = $addEntityForm.find('.modal-form');
+            $addEntityFormBody.html('');
+            var url = '{{ url('admin_add_category_form') }}';
+            $addEntityFormBody.load(url.replace('category', entityName), function () {
+                $addEntityForm.modal();
+                $addEntityFormBody.find('form').ajaxForm({
+                    success: function (json) {
+                        var result = JSON.parse(json);
+                        if (result.result !== 'success') {
+                            alert('BŁĄD');
+                            return;
+                        }
+                        switch (entityName) {
+                            case 'category':
+                                saveCategoryInExhibitForm(result);
+                                break;
+                            case 'owner':
+                                saveOwnerInExhibitForm(result);
+                                break;
+                            case 'donor':
+                                saveDonorInExhibitForm(result);
+                                break;
+                        }
+                    }
+                })
+            });
+
+        }
+    </script>
+    <script src="{{ asset('admin/js/app/controller/exhibit-form.js') }}"></script>
+{% endblock %}
+
+

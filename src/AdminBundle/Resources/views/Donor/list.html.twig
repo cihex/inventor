@@ -1,0 +1,57 @@
+{% extends "@Admin/template.html.twig" %}
+{% block content %}
+    <div id="categories-list">
+        <div id="content-header">
+            <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Strona główna</a> <a href="#"
+                                                                                                                                  class="current">Ofiarodawcy</a>
+            </div>
+            <h1>Ofiarodawcy</h1>
+        </div>
+        <div class="container-fluid">
+            <hr>
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="widget-box">
+                        <div class="widget-title"><span class="icon"><i class="icon-th"></i></span>
+                            <h5>Ofiarodawcy</h5>
+                        </div>
+                        <div class="widget-content nopadding">
+                            <table class="table table-bordered data-table">
+                                <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nazwa</th>
+                                    <th>E-mail</th>
+                                    <th>Akcje</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for donor in donors %}
+                                    <tr class="gradeC">
+                                        <td>{{ donor.id }}</td>
+                                        <td>
+                                            {{ donor.name }}
+                                        </td>
+                                        <td>{{ donor.email }}</td>
+                                        <td>
+                                            <a class="btn btn-success" href="{{ url('admin_donor_edit', {'id': donor.id}) }}">
+                                                <span class="icon icon-edit"></span> Edytuj
+                                            </a>
+                                            <a class="btn btn-danger" href="{{ url('admin_donor_delete', {'id': donor.id}) }}">
+                                                <span class="icon icon-trash"></span> Usuń
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            <a class="btn btn-success" href="{{ url('admin_donor_edit') }}">Dodaj nową</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+{% endblock %}

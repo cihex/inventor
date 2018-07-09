@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <title>Eksponat {{ exhibit.name }} [{{ exhibit.getNumber() }}]</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=0.5"/>
+    {% block javascript %}
+       {% if isPrint %}
+        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+       {% endif %}
+    {% endblock %}
+    <style>
+        body {
+            font-family: sans-serif;
+            {% if not isPrint %}
+                width: 800px;
+            {% endif %}
+
+            margin: 0 auto;
+
+        }
+
+        #number {
+            position: absolute;
+            right: 50px;
+            top: 10px;
+            font-size: 15pt;
+        }
+
+        #qr {
+            position: absolute;
+            left: 20px;
+            top: 10px;
+            font-size: 15pt;
+        }
+
+        #pp-container {
+            {% if not isPrint %}
+                width: 800px;
+                max-width: 800px;
+            {% else %}
+                width: 100%;
+            {% endif %}
+
+            border: none;
+            margin: 0;
+            padding: 20px;
+            page-break-after: always;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 23px;
+            text-align: center;
+        }
+
+        #pp-container h2 {
+            font-size: 27px;
+        }
+
+        .section {
+            margin: 10px 0;
+            width: 100%;
+            clear: both;
+        }
+
+        img.photo {
+            float: left;
+            margin: 10px;
+            display: block;
+            max-width: 230px;
+            max-height: 120px;
+            width: auto;
+            height: auto;
+        }
+
+        .section_part {
+            float: left;
+            width: 50%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .bottom {
+            border-top: 1px solid #aaa;
+            font-size: 10pt;
+            width: 100%;
+            clear: both;
+        }
+    </style>
+    <script>
+
+        {% if isPrint %}
+            window.print();
+        {% endif %}
+    </script>
+</head>
+<body>
+
+<div id="pp-container">
+    <div id="number">
+        {{ exhibit.getNumber() }}
+    </div>
+    <img src="{{ url('admin_exhibit_qr', {'id': exhibit.id}) }}" id="qr">
+    <h1>KARTA EKSPONATU</h1>
+    <div class="section" style="margin-top: 50px">
+        <div class="section_part">
+            <h2>{{ exhibit.name }}</h2>
+        </div>
+        <div class="section_part">
+            <br/>
+            <strong>Producent:</strong> {{ exhibit.producer }}<br/>
+            <strong>Rok produkcji:</strong> {{ exhibit.produceYear }}
+        </div>
+    </div>
+    <div class="section">
+        <div class="section_part">
+            {% if exhibit.showDonor %}
+                <h3>Ofiarodawca:</h3>
+                {{ exhibit.donor.name }}
+                {{ exhibit.donor.street }}<br/>
+                {{ exhibit.donor.postalCode }} {{ exhibit.donor.city }} <br/>
+                {% if exhibit.donor.email is not null %}<strong>tel.:</strong> {{ exhibit.donor.email }} {% endif %}
+                {% if exhibit.donor.email is not null %}<strong>e-mail:</strong> {{ exhibit.donor.email }} {% endif %}
+            {% endif %}
+        </div>
+        <div class="section_part">
+            {% if exhibit.showOwner %}
+                <h3>Właściciel:</h3>
+                {{ exhibit.owner.name }}
+            {% endif %}
+        </div>
+    </div>
+    <div class="section">
+        <div class="section_part">
+            <h3>Stan eksponatu</h3>
+        </div>
+        <div class="section_part">
+            <p>{{ exhibit.state }}</p>
+        </div>
+    </div>
+    <div class="section">
+        <h3>Opis</h3>
+        {{ exhibit.description }}
+    </div>
+    <div class="section">
+
+        {% for photo in exhibit.visiblePhotos %}
+            {{ render(controller('AdminBundle:Exhibit:getThumb', {'photoName': photo.name, 'size': 350, 'container': 'gallery'})) }}
+        {% endfor %}
+    </div>
+    <div class="bottom">
+        © {{ siteTitle }}
+    </div>
+</div>
+</body>
+</html>
+

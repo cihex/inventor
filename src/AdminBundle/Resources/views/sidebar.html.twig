@@ -1,0 +1,18 @@
+<div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-list"></i> Menu</a>
+    <ul>
+        <li {% if 'exhibit' in app.request.attributes.get('_route') %}class="active"{% endif %}><a href="{{ url('admin_exhibit') }}"><i
+                        class="icon icon-th"></i> <span>Eksponaty</span></a></li>
+        <li {% if 'category' in app.request.attributes.get('_route') %}class="active"{% endif %}><a href="{{ url('admin_category_list') }}"><i
+                        class="icon icon-folder-open"></i> <span>Kategorie</span></a></li>
+        <li {% if 'owner' in app.request.attributes.get('_route') %}class="active"{% endif %}><a href="{{ url('admin_owner_list') }}"><i
+                        class="icon icon-user-md"></i> <span>Właściciele</span></a></li>
+        <li {% if 'donor' in app.request.attributes.get('_route') %}class="active"{% endif %}><a href="{{ url('admin_donor_list') }}"><i
+                        class="icon icon-gift"></i> <span>Ofiarodawcy</span></a></li>
+        <li {% if 'hire' in app.request.attributes.get('_route') %}class="active"{% endif %}><a href="{{ url('admin_hire_index') }}"><i
+                        class="icon icon-calendar"></i> <span>Wypożyczenia</span></a></li>
+        {% if is_granted('ROLE_ADMIN') %}
+            <li {% if 'user' in app.request.attributes.get('_route') %}class="active"{% endif %}><a href="{{ url('admin_user') }}"><i
+                            class="icon icon-user"></i> <span>Użytkownicy</span></a></li>
+        {% endif %}
+    </ul>
+</div>

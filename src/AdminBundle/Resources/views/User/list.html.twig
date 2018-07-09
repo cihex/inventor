@@ -1,0 +1,51 @@
+<div id="content-header">
+    <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Strona główna</a> <a href="#" class="current">Użytkownicy</a>
+    </div>
+    <h1>Użytkownicy</h1>
+</div>
+<div class="container-fluid">
+    <hr>
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title"><span class="icon"><i class="icon-th"></i></span>
+                    <h5>Użytkownicy</h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered data-table">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nazwa użytkownika</th>
+                            <th>E-mail</th>
+                            <th>Administrator</th>
+                            <th>Akcje</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in users %}
+                            <tr class="gradeC">
+                                <td>{{ user.getId() }}</td>
+                                <td>{{ user.getUsername() }}</td>
+                                <td>{{ user.getEmail() }}</td>
+                                <td class="center">
+                                    {% if user.isAdmin() %}
+                                        TAK
+                                    {% else %}
+                                        NIE
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a class="btn btn-danger" onclick=" if (!confirm('Czy na pewno chcesz usunąć użytkownika?')) { return false; }"
+                                       href="{{ url('admin_user_remove', {'userId': user.id}) }}"><span class="icon-trash"></span> Usuń</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

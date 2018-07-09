@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <title>Domino INVENTOR</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    {% block styles %}
+        <link rel="stylesheet" href="{{ asset('bundles/admin/css/bootstrap.min.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/admin/css/bootstrap-responsive.min.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/admin/css/uniform.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/admin/css/select2.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/admin/css/matrix-style.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/admin/css/matrix-media.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/admin/js/node_modules/@fancyapps/fancybox/dist/jquery.fancybox.min.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/admin/css/matrix-media.css') }}"/>
+        <link href="{{ asset('bundles/admin/font-awesome/css/font-awesome.css') }}" rel="stylesheet"/>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+    {% endblock %}
+
+    {% block javascript %}
+        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+        <script src="{{ asset('bundles/admin/js/jquery.min.js') }}"></script>
+        <script src="{{ asset('bundles/admin/js/main.js') }}"></script>
+        <script src="{{ asset('bundles/admin/js/node_modules/@fancyapps/fancybox/dist/jquery.fancybox.min.js') }}"></script>
+        <script src="{{ asset('bundles/admin/js/jquery.ui.custom.js') }}"></script>
+        <script src="{{ asset('bundles/admin/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('bundles/admin/js/jquery.uniform.js') }}"></script>
+        <script src="{{ asset('bundles/admin/js/select2.min.js') }}"></script>
+        <script src="{{ asset('bundles/admin/js/jquery.dataTables.min.js') }}"></script>
+        <script src="{{ asset('bundles/admin/js/matrix.calendar.js') }}"></script>
+        <script src="{{ asset('bundles/admin/js/matrix.tables.js') }}"></script>
+        <script src="{{ asset('bundles/admin/js/jquery.form.min.js') }}"></script>
+        <script>
+            $(function () {
+                $.extend(true, $.fn.dataTable.defaults, {
+                    "decimal": "",
+                    "emptyTable": "No data available in table",
+                    "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+                    "infoEmpty": "Showing 0 to 0 of 0 entries",
+                    "infoFiltered": "(filtered from _MAX_ total entries)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Show _MENU_ entries",
+                    "loadingRecords": "Loading...",
+                    "processing": "Processing...",
+                    "sSearch": "AAAAAA:",
+                    "zeroRecords": "No matching records found",
+                    "oPaginate": {
+                        "sFirst": "Pierwsza",
+                        "last": "Ostatnia",
+                        "next": "Następna",
+                        "previous": "Poprzednia"
+                    },
+                    "aria": {
+                        "sortAscending": ": activate to sort column ascending",
+                        "sortDescending": ": activate to sort column descending"
+                    }
+
+                });
+            });
+
+        </script>
+    {% endblock %}
+</head>
+<body>
+{% set isNewUser = 0 %}
+{% for flashMessage in app.session.flashbag.get('user') %}
+    {% if flashMessage == 'new' %}
+        {% set isNewUser = 1 %}
+    {% endif %}
+{% endfor %}
+{% if isNewUser %}
+    {{ render(controller('AdminBundle:Security/Security:newPassword')) }}
+{% endif %}
+{% include "@Admin/header.html.twig" %}
+
+{% include "@Admin/top_menu.html.twig" %}
+
+{% include "@Admin/sidebar.html.twig" %}
+
+<div id="content">
+    {% block content %}
+
+    {% endblock %}
+</div>
+
+{% include "@Admin/footer.html.twig" %}
+{% block bottomJS %}
+
+{% endblock %}
+</body>
+</html>

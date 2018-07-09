@@ -1,0 +1,11 @@
+<div id="hire-return-form-box">
+    {{ form(form) }}
+</div>
+<script>
+    $(function () {
+        $('#hire-return-form-box').find('form').ajaxForm({
+            'url': Routing.generate('admin_hire_return'),
+            'data': {'hireId': {{ hireId }}}
+        });
+    });
+</script>

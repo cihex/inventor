@@ -1,0 +1,28 @@
+{% extends '@Admin/template.html.twig' %}
+
+{% block content %}
+    <div id="content-header">
+        <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Strona główna</a> <a
+                    href="{{ url('admin_hire_index') }}">Wypożyczenia</a>
+            <a href="#" class="current">{% if hireId is not null %}Edycja{% else %}Nowy{% endif %}</a>
+        </div>
+        <h1>Wypożyczenia</h1>
+    </div>
+    <div class="container-fluid">
+        <hr>
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="widget-box">
+                    <div class="widget-title"><span class="icon"><i class="icon-th"></i></span>
+                        {% if hireId is null %}<h5>Nowe</h5>{% else %}<h5>Edycja{% endif %}</h5>
+                    </div>
+                    <div class="widget-content">
+                        {{ form(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

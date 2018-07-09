@@ -1,0 +1,57 @@
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span6">
+            <div class="widget-box">
+                <div class="widget-title"><span class="icon"> <i class="icon-align-justify"></i> </span>
+                    <h5>Dodaj nowego użytkownika</h5>
+                </div>
+                <div class="widget-content">
+                    {{ form_start(form, {'action': path('admin_validate_register'), 'method': 'POST', 'attr': {'id': 'register-form'}}) }}
+                    <div id="register-form-errors" class="control-group normal_text">
+
+                    </div>
+                    <div class="control-group">
+                        {{ form_row(form.username) }}
+                        <span class="text-error" id="error-username"></span>
+                    </div>
+                    <div class="control-group">
+                        {{ form_row(form.email) }}
+                        <span class="text-error" id="error-email"> {{ form_errors(form.email) }}</span>
+                    </div>
+                    <div class="control-group">
+                        <button type="submit" class="btn btn-success">Dodaj użytkownika</button>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('#register-form').ajaxForm({
+        success: function (json) {
+            console.log(json);
+            var data = JSON.parse(json);
+            $('.text-error').html('');
+            if (data.errors && data.result != 'success') {
+                $.each(data.errors, function (key, children) {
+                    $.each(children, function (index, error) {
+                        $('#error-' + key).append(error + '<br />');
+                    });
+                });
+            } else {
+                $('<div class="modal">' +
+                        '<div class="modal-header">Zapisano zmiany</div>' +
+                        '<div class="modal-body"><h3>Dane nowego użytkownika:</h3>' +
+                        '<p class="alert alert-block alert-success"><strong>Login: </strong>' + data.user.login + '<br />' +
+                        '<strong>E-mail:</strong> ' + data.user.email + '<br />' +
+                        '<strong>Hasło tymczasowe: </strong>' + data.user.password + '</p>' +
+                        '<p class="alert alert-info alert-block">Jeżeli podany został adres e-mail instrukcja dotycząca logowania została wysłana. W przeciwnym wypadku dane należy przekazać użytkownikowi w bezpieczny sposób.i</p>' +
+                        '<p class="alert alert-block"><strong>Uwaga!</strong><br />' +
+                        'Podczas pierwszego logowania użytkownik zostanie poproszony o ustawienie własnego hasła.</p></div></div>').modal();
+                $("#register-form").trigger('reset');
+                reloadUsersList();
+            }
+        }
+    });
+</script>

@@ -1,0 +1,30 @@
+<!--top-Header-menu-->
+<div id="user-nav" class="navbar navbar-inverse">
+    <ul class="nav">
+        <li class="dropdown" id="profile-messages"><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages"
+                                                      class="dropdown-toggle"><i class="icon icon-user"></i> <span
+                        class="text">Witaj {{ app.user.getUsername() }}</span><b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a href="{{ url('logout') }}"><i class="icon-key"></i> Wyloguj</a></li>
+            </ul>
+        </li>
+        <li class="dropdown" id="shortcut"><a title="" href="#" data-toggle="dropdown" data-target="pshortcut"
+                                              class="dropdown-toggle"><i class="icon icon-star"></i> <span
+                        class="text">Skróty</span><b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a href="{{ url('admin_exhibit_add') }}"><i class="icon-plus"></i> Dodaj eksponat</a></li>
+                <li><a href="{{ url('admin_hire_new') }}"><i class="icon-calendar"></i> Wypożycz sprzęt</a></li>
+                <li><a href="{{ url('admin_donor_edit') }}"><i class="icon-gift"></i> Dodaj ofiarodawcę</a></li>
+                <li><a href="{{ url('admin_owner_edit') }}"><i class="icon-user-md"></i> Dodaj właściciela</a></li>
+            </ul>
+        </li>
+        <li class="hidden"><a title="" href="#"><i class="icon icon-cog"></i> <span class="text">Ustawienia</span></a></li>
+        <li class=""><a title="" href="{{ url('logout') }}"><i class="icon icon-share-alt"></i> <span class="text">Wyloguj</span></a></li>
+    </ul>
+</div>
+<div id="search">
+    <form action="{{ url('admin_exhibit_search') }}" method="POST">
+        <input type="text" name="pattern" placeholder="Wyszukaj">
+        <button type="submit" class="tip-bottom" data-original-title="Wyszukaj"><i class="icon-search icon-white"></i></button>
+    </form>
+</div>

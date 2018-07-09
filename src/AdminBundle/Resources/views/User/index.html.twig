@@ -1,0 +1,16 @@
+{% extends "@Admin/template.html.twig" %}
+{% block content %}
+    <div id="users-list">
+        {{ render(url('admin_user_list')) }}
+    </div>
+    {{ render(controller('AdminBundle:Security/Security:register')) }}
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        function reloadUsersList() {
+            $('#users-list').load('{{ url('admin_user_list') }}')
+        }
+    </script>
+{% endblock %}

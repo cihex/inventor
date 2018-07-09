@@ -1,0 +1,8 @@
+services:
+    admin.controlle_lostener:
+        class: AdminBundle\Listeners\ControllerListener
+        arguments:
+         - '@service_container'
+         - "@session"
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller }

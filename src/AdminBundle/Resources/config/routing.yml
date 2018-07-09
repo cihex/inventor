@@ -1,0 +1,195 @@
+admin_homepage:
+    path:     /admin
+    defaults: { _controller: AdminBundle:Exhibit:index }
+    methods: [GET]
+
+admin_authorize:
+    path:    /authorize
+    defaults: { _controller: AdminBundle:Security/Security:authorize }
+    methods: [POST]
+
+admin_login:
+    path: /login
+    defaults: { _controller: AdminBundle:Security/Security:login }
+    methods: [GET]
+
+admin_register:
+    path: /register
+    defaults: { _controller: AdminBundle:Security/Security:register }
+    methods: [GET, POST]
+
+admin_user:
+    path: /user
+    defaults: { _controller: AdminBundle:User:index }
+    methods: [GET]
+
+admin_user_list:
+    path: /user/list
+    defaults: { _controller: AdminBundle:User:list }
+
+admin_user_remove:
+    path: /user/remove/{userId}
+    defaults: { _controller: AdminBundle:User:remove}
+
+admin_validate_new_password:
+    path: /admin/password/validate
+    defaults: { _controller: AdminBundle:Security/Security:validateNewPassword }
+    methods: [POST]
+
+admin_validate_register:
+    path: /admin/register/validate
+    defaults: { _controller: AdminBundle:Security/Security:validateRegister }
+    methods: [POST]
+
+admin_exhibit:
+    path: /admin/exhibit
+    defaults: { _controller: AdminBundle:Exhibit:index }
+    methods: [GET]
+
+admin_exhibit_list:
+    path: /admin/exhibit/list
+    defaults: { _controller: AdminBundle:Exhibit:list }
+
+admin_exhibit_add:
+    path: /admin/exhibit/add
+    defaults: { _controller: AdminBundle:Exhibit:form }
+
+admin_exhibit_edit:
+    path: /admin/exhibit/edit/{id}
+    defaults: { _controller: AdminBundle:Exhibit:form, id: null }
+
+admin_exhibit_save:
+    path: /admin/exhibit/save/{id}
+    defaults: { _controller: AdminBundle:Exhibit:save, id: null }
+
+admin_exhibit_delete:
+    path: /admin/exhibit/delete/{id}
+    defaults: { _controller: AdminBundle:Exhibit:delete, id: null }
+
+admin_add_category_form:
+    path: /admin/category/form/{id}
+    defaults: { _controller: AdminBundle:Category:form, id: null }
+
+admin_cateogry_edit:
+    path: /admin/category/edit/{id}
+    defaults: { _controller: AdminBundle:Category:edit, id: null }
+
+admin_add_category_save:
+    path: /admin/category/save
+    defaults: { _controller: AdminBundle:Category:save }
+
+admin_category_list:
+    path: /admin/category
+    defaults: { _controller: AdminBundle:Category:list }
+
+admin_category_delete:
+    path: /admin/category/delete/{id}
+    defaults: { _controller: AdminBundle:Category:delete, id: null }
+
+admin_owner_list:
+    path: /admin/owner
+    defaults: { _controller: AdminBundle:Owner:list}
+
+admin_owner_edit:
+    path: /admin/owner/edit/{id}
+    defaults: { _controller: AdminBundle:Owner:edit, id: null }
+
+admin_add_owner_form:
+    path: /admin/owner/add/{id}
+    defaults: { _controller: AdminBundle:Owner:form, id: null }
+
+admin_owner_form:
+    path: /admin/owner/form/{id}
+    defaults: { _controller: AdminBundle:Owner:form, id: null }
+
+admin_add_owner_save:
+    path: /admin/owner/save
+    defaults: { _controller: AdminBundle:Owner:save }
+
+admin_owner_delete:
+    path: /admin/owner/delete/{id}
+    defaults: { _controller: AdminBundle:Owner:delete }
+
+admin_donor_list:
+    path: /admin/donor
+    defaults: { _controller: AdminBundle:Donor:list }
+
+admin_donor_form:
+    path: /admin/donor/form/{id}
+    defaults: { _controller: AdminBundle:Donor:form, id: null}
+
+admin_donor_edit:
+    path: /admin/donor/edit/{id}
+    defaults: { _controller: AdminBundle:Donor:edit, id: null}
+
+admin_donor_delete:
+    path: /admin/donor/delete/{id}
+    defaults: { _controller: AdminBundle:Donor:delete }
+
+admin_add_donor_form:
+    path: /admin/donor/add
+    defaults: { _controller: AdminBundle:Donor:form }
+
+admin_add_donor_save:
+    path: /admin/donor/save
+    defaults: { _controller: AdminBundle:Donor:save }
+
+admin_exhibit_photo:
+    path: /admin/exhibit/photo/{id}
+    defaults: { _controller: AdminBundle:Exhibit:loadPhoto, id: null }
+
+admin_exhibit_delete_photo:
+    path: /admin/exhibit/photo/delete/{photoId}
+    defaults: { _controller: AdminBundle:Exhibit:deletePhoto, photoId: null }
+
+admin_exhibit_photo_set_visibility:
+    path: /admin/exhibit/photo/visibility/{photoId},{isActive}
+    defaults: { _controller: AdminBundle:Exhibit:setActivePhoto, photoId: null, isActive: false }
+
+admin_exhibit_print:
+    path: /admin/exhibit/print/{id}
+    defaults: { _controller: AdminBundle:Exhibit:print }
+
+admin_exhibit_show:
+    path: /admin/exhibit/show/{id}
+    defaults: { _controller: AdminBundle:Exhibit:show }
+
+admin_exhibit_upload_photo:
+    path: /admin/exhibit/uploadphoto/{exhibitId}
+    defaults: { _controller: AdminBundle:Exhibit:uploadPhoto, exhibitId: 0 }
+
+admin_hire_index:
+    path: /admin/hire
+    defaults: { _controller: AdminBundle:Hire:index }
+
+admin_hire_edit:
+    path: /admin/hire/edit/{id}
+    defaults: { _controller: AdminBundle:Hire:form }
+
+admin_hire_return:
+    path: /admin/hire/return/{id}
+    defaults: { _controller: AdminBundle:Hire:return }
+
+admin_hire_cancel:
+    path: /admin/hire/return/{id}
+    defaults: { _controller: AdminBundle:Hire:cancel }
+
+admin_hire_new:
+    path: /admin/hire/new
+    defaults: { _controller: AdminBundle:Hire:form }
+
+admin_hire_delete:
+    path: /admin/hire/delete/{id}
+    defaults: { _controller: AdminBundle:Hire:delete, id: null }
+
+admin_exhibit_search:
+    path: /admin/exhibit/search
+    defaults: { _controller: AdminBundle:Exhibit:search }
+
+admin_exhibit_thumb:
+    path: /admin/exhibit/thumb/{photoName}/{size}/{container}
+    defaults: { _controller: AdminBundle:Exhibit:getThumb, container: '' }
+
+admin_exhibit_qr:
+    path: /admin/exhibit/qr/{id}
+    defaults: { _controller: AdminBundle:Exhibit:getQr }

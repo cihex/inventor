@@ -1,0 +1,87 @@
+{% extends "@Admin/template.html.twig" %}
+{% block content %}
+    <div id="categories-list">
+        <div id="content-header">
+            <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Strona główna</a> <a href="#"
+                                                                                                                                  class="current">Wypożyczenia</a>
+            </div>
+            <h1>Wypożyczenia</h1>
+        </div>
+        <div class="container-fluid">
+            <hr>
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="widget-box">
+                        <div class="widget-title"><span class="icon"><i class="icon-th"></i></span>
+                            <h5>Wypożyczenia</h5>
+                        </div>
+                        <div class="widget-content nopadding">
+                            <table class="table table-bordered data-table">
+                                <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Osoba</th>
+                                    <th>E-mail</th>
+                                    <th>Eksponaty</th>
+                                    <th>Data wypożyczenia</th>
+                                    <th>Planowana data zwrotu</th>
+                                    <th>Faktyczna data zwrotu</th>
+                                    <th>Akcje</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for hire in hires %}
+                                    <tr class="gradeC {% if hire.outOfTime %}alert{% elseif hire.planned %}info{% elseif hire.returned %}success{% endif %}">
+                                        <td>
+                                            {% if hire.outOfTime %}
+                                                <span class="icon-exclamation-sign alert-block leftk"></span>
+                                            {% elseif hire.planned %}
+                                                <span class="info icon-time"></span>
+                                            {% elseif hire.returned %}
+                                                <span class="success icon-check"></span>
+                                            {% endif %}
+                                            {{ hire.id }}
+                                        </td>
+                                        <td>
+                                            {{ hire.name }} {{ hire.surname }}
+                                        </td>
+                                        <td>{{ hire.email }}</td>
+                                        <td>
+                                            {% for exhibit in hire.exhibits %}
+                                                <a class="btn btn-default btn-mini inline"
+                                                   href="{{ url('admin_exhibit_edit', {'id': exhibit.id}) }}">{{ exhibit.number }}</a>
+                                            {% endfor %}
+                                        </td>
+                                        <td>{{ hire.hireDate|date("d.m.Y") }}</td>
+                                        <td>{{ hire.plannedReturnDate|date("d.m.Y") }}</td>
+                                        <td>
+                                            {% if hire.returnDate is null %}
+                                                {{ hire.returnDate|date("d.m.Y") }}</td>
+                                            {% endif %}
+                                        <td>
+                                            <a class="btn btn-info" href="{{ url('admin_hire_edit', {'id': hire.id}) }}">
+                                                <span class="icon icon-edit"></span> Zmień dane
+                                            </a>
+                                            {% if hire.returnDate is null %}
+                                                <a class="btn btn-success" href="{{ url('admin_hire_return', {'id': hire.id}) }}">
+                                                    <span class="icon icon-check"></span> Oznacz zwrot
+                                                </a>
+                                            {% endif %}
+                                            <a class="btn btn-danger" href="{{ url('admin_hire_cancel', {'id': hire.id}) }}">
+                                                <span class="icon icon-trash"></span> Anuluj
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            <a class="btn btn-success" href="{{ url('admin_hire_new') }}"><span class="icon icon-plus"></span> Wypożycz eksponaty</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+{% endblock %}

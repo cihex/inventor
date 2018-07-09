@@ -1,0 +1,20 @@
+<div style="width: 800px">
+    <h1>Dzień Dobry!</h1>
+    <p>W systemie inventaryzacyjnym zostało utworzone dla nowe konto.</p>
+    <p>Aby zalogować się należy przejść do <a href="{{ url('admin_exhibit') }}">http://itdomino.pl</a> i użyć następujących danych:</p>
+    <p>
+        <strong>Login: </strong> {{ userData.login }}<br />
+        <strong>Hasło tymczasowe: </strong> {{ userData.password }}<br />
+    </p>
+    <h3>Uwaga!</h3>
+    <p>
+        Podczas pierwszego logowania system poprosi o zmianę hasła.
+    </p>
+    <hr />
+    <p>
+        <small>
+            © {{ siteTitle }}<br />
+            Ta wiadomość została wysłana automatycznie. Prosimy na nią nie odpowiadać.
+        </small>
+    </p>
+</div>

@@ -1,0 +1,57 @@
+{% extends "@Admin/template.html.twig" %}
+{% block content %}
+    <div id="categories-list">
+        <div id="content-header">
+            <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Strona główna</a> <a href="#"
+                                                                                                                                  class="current">Właściciele</a>
+            </div>
+            <h1>Właściciele</h1>
+        </div>
+        <div class="container-fluid">
+            <hr>
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="widget-box">
+                        <div class="widget-title"><span class="icon"><i class="icon-th"></i></span>
+                            <h5>Właściciele</h5>
+                        </div>
+                        <div class="widget-content nopadding">
+                            <table class="table table-bordered data-table">
+                                <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nazwa</th>
+                                    <th>E-mail</th>
+                                    <th>Akcje</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for owner in owners %}
+                                    <tr class="gradeC">
+                                        <td>{{ owner.id }}</td>
+                                        <td>
+                                            {{ owner.name }}
+                                        </td>
+                                        <td>{{ owner.email }}</td>
+                                        <td>
+                                            <a class="btn btn-success" href="{{ url('admin_owner_edit', {'id': owner.id}) }}">
+                                                <span class="icon icon-edit"></span> Edytuj
+                                            </a>
+                                            <a class="btn btn-danger" href="{{ url('admin_owner_delete', {'id': owner.id}) }}">
+                                                <span class="icon icon-trash"></span> Usuń
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            <a class="btn btn-success" href="{{ url('admin_owner_edit') }}">Dodaj nową</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+{% endblock %}

@@ -1,0 +1,6 @@
+{% extends "@Admin/template.html.twig" %}
+{% block content %}
+    <div id="exhibition-list">
+        {{ render(controller('AdminBundle:Exhibit:list', {'search': search, 'forceExhibits': forceExhibits, 'pattern': pattern})) }}
+    </div>
+{% endblock %}

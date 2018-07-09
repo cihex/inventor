@@ -1,0 +1,22 @@
+.check_active {
+    color: greenyellow !important;
+}
+
+.thumbnails .actions-2 {
+    opacity: 1; color:#fff; top:0; transition:1s ease-out;
+    width: 100%;
+    height: 22px;
+    background-color: rgba(0,0,0, 0.8);
+    padding: 4px 8px 8px 8px;
+    position: absolute;
+    left:15px;
+    margin-top: -13px;
+    margin-left: -24px;
+    -moz-transition: opacity 0.3s ease-in-out;
+    font-size: 20px;
+
+
+}
+.thumbnails li:hover .actions-2,.thumbnails li:hover .actions-2 a:hover{
+    opacity: 1; color:#fff; transition:1s ease-out;
+}
